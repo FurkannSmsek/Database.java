@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Prison:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Prison_jar</output-path>
+    <root id="archive" name="Prison.jar">
+      <element id="module-output" name="Prison" />
+      <element id="extracted-dir" path="$USER_HOME$/Desktop/mysql-connector-java-8.0.30/mysql-connector-java-8.0.30.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
