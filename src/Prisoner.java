@@ -1,8 +1,12 @@
-public class Prisoner {
-   private int prisonerID,weight,height,age,punishmenTime;
-   private String prisonerName,prisonerLastName,gender,TC,releaseDate;
+import java.util.Date;
 
-    public Prisoner(int prisonerID,String prisonerName, String prisonerLastName, int height, int weight, String releaseDate, String TC, int age,String gender ,int punishmenTime ) {
+public class Prisoner {
+   private int prisonerID,weight,height,age,gender,punishmenTime;
+   private String prisonerName,prisonerLastName,TC;
+
+   private Date releaseDate;
+
+    public Prisoner(int prisonerID, String prisonerName, String prisonerLastName, int height, int weight, Date releaseDate, String TC, int age, int gender , int punishmenTime ) {
         this.prisonerID = prisonerID;
         this.weight = weight;
         this.height = height;
@@ -71,11 +75,11 @@ public class Prisoner {
         this.prisonerLastName = prisonerLastName;
     }
 
-    public String getGender() {
+    public int getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(int gender) {
         this.gender = gender;
     }
 
@@ -87,11 +91,11 @@ public class Prisoner {
         this.TC = TC;
     }
 
-    public String getReleaseDate() {
+    public Date getReleaseDate() {
         return releaseDate;
     }
 
-    public void setReleaseDate(String releaseDate) {
+    public void setReleaseDate(Date releaseDate) {
         this.releaseDate = releaseDate;
     }
 }

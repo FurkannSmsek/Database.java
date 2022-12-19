@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.*;
 
 public class AuthorityScreen0  extends JFrame{
     private JPanel panel1;
@@ -25,6 +26,7 @@ public class AuthorityScreen0  extends JFrame{
         setLocation(500,200);
         setTitle("Author Level: WARDEN");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
         CreateAuthorTable();
 
 
@@ -106,6 +108,11 @@ public class AuthorityScreen0  extends JFrame{
             }
         });
     }
+
+
+
+
+
     private void CreateAuthorTable(){
 
         model = (DefaultTableModel) table1.getModel();

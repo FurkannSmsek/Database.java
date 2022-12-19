@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -226,18 +227,13 @@ public class prisonStuff {
 
                 int weight=rs.getInt("prisoner_weight");
 
-                String releaseDate= String.valueOf(rs.getDate("prisoner_release_date"));
+                Date releaseDate= rs.getDate("prisoner_release_date");
 
                 String TC=rs.getString("prisoner_TC");
 
                 int age=rs.getInt("prisoner_age");
 
-                String gender;
-                if (rs.getBoolean("prisoner_gender")){
-                    gender="Male";
-                }else {
-                     gender="Female";
-                }
+                int gender = rs.getInt("prisoner_gender");
 
                 int punishmentTime=rs.getInt("prisoner_punishment_time");
 
