@@ -29,7 +29,7 @@ public class prisonStuff {
 
     public boolean login(String username,String password){
 
-        String query= "Select * From authorities where authority_name= ? and authority_password = ? ";
+        String query= "Select * From authorities where authorities_name= ? and authorities_password = ? ";
 
         Object[] loginDatas=new Object[2];
         try {
@@ -56,7 +56,7 @@ public class prisonStuff {
     public int getLevel(String username,String password){
         int level=3;
 
-        String queryLevel= "Select authority_level From authorities where authority_name= ? and authority_password = ?";
+        String queryLevel= "Select authorities_level From authorities where authorities_name= ? and authorities_password = ?";
         try {
             preparedStatement= con.prepareStatement(queryLevel);
             preparedStatement.setString(1,username);
@@ -68,7 +68,7 @@ public class prisonStuff {
 
                 return level;
             }else {
-                level=levelResult.getInt("authority_level");
+                level=levelResult.getInt("authorities_level");
 
                 return level;
 
@@ -447,7 +447,117 @@ public class prisonStuff {
         }
 
     }
+    public void deleteEmployee(int id){
+        String sorgu = "Delete from employee where idemployee = ?";
 
+        try {
+            preparedStatement = con.prepareStatement(sorgu);
+            preparedStatement.setInt(1, id);
+
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException ex) {
+            System.out.println("Silme Başarısız");
+            Logger.getLogger(prisonStuff.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+
+    public void addEmployee(String name,String lastname,String department,String authority,String job) {
+
+        String sorgu = "Insert Into employee(employee_name,employee_surname,employee_department,employee_authority,employee_job,employee_id) VALUES(?,?,?,?,?,?)";
+
+        try {
+            preparedStatement = con.prepareStatement(sorgu);
+
+
+            preparedStatement.setString(1, name);
+            preparedStatement.setString(2, lastname);
+            preparedStatement.setString(3, department);
+            preparedStatement.setString(4, authority);
+            preparedStatement.setString(5, job);
+
+            preparedStatement.executeUpdate();
+
+
+
+
+
+        } catch (SQLException ex) {
+            System.out.println("Ekleme Başarısız!");
+            Logger.getLogger(prisonStuff.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+
+
+
+
+
+    }
+
+    public void updateEmployee(int id ,String name,String lastname,String department,String authority,String job) {
+        String sorgu =  "Update employee set employee_name = ? , employee_surname = ? , employee_department = ? , employee_authority = ?, employee_job = ?  idemployee = ?";
+
+        try {
+            preparedStatement = con.prepareStatement(sorgu);
+
+
+            preparedStatement.setString(1, name);
+            preparedStatement.setString(2, lastname);
+            preparedStatement.setString(3, department);
+            preparedStatement.setString(4, authority);
+            preparedStatement.setString(5, job);
+            preparedStatement.setInt(6,id);
+
+            preparedStatement.executeUpdate();
+
+
+
+        } catch (SQLException ex) {
+            System.out.println("Update Başarısız");
+            Logger.getLogger(prisonStuff.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public ArrayList<Employee> getEmployees(){
+
+        ArrayList<Employee> data=new ArrayList<Employee>();
+
+        try {
+            statement = con.createStatement();
+
+            String sorgu="Select * From employee";
+
+            ResultSet rs=statement.executeQuery(sorgu);
+
+            while (rs.next()){
+                int id=rs.getInt("idemployee");
+
+                String name=rs.getString("employee_name");
+
+                String surname=rs.getString("employee_surname");
+
+                String department=rs.getString("employee_department");
+
+                String authority=rs.getString("employee_authority");
+
+                String job= rs.getString("employee_job");
+
+                data.add(new Employee(id,name,surname,department,authority,job));
+
+
+            }
+            return data;
+
+        } catch (SQLException e) {
+            System.out.println("Employee Veritabanına ulaşılamadı");
+            return null;
+        }
+
+
+
+    }
 
 
 }

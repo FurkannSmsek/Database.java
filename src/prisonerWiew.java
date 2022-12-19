@@ -51,7 +51,7 @@ public class prisonerWiew extends  JFrame {
         addButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                PrisonerAdd prisonerAdd=new PrisonerAdd();
+                PrisonAdd prisonerAdd=new PrisonAdd();
                 setVisible(false);
                 prisonerAdd.setVisible(true);
 
