@@ -51,7 +51,7 @@ public class PrisonerUpdate extends JFrame{
 
         prisonerID.setText(Integer.toString(prisonerWiew.prisoner.getPrisonerID()));
         prisonerName.setText(prisonerWiew.prisoner.getPrisonerName());
-        prisonerLastname.setText((String) prisonerWiew.prisoner.getPrisonerLastName());
+        prisonerLastname.setText(prisonerWiew.prisoner.getPrisonerLastName());
         prisonerHeight.setText(Integer.toString(prisonerWiew.prisoner.getHeight()));
         prisonerWeight.setText( Integer.toString(prisonerWiew.prisoner.getWeight()));
         prisonerReleaseDate.setText(new SimpleDateFormat().format(prisonerWiew.prisoner.getReleaseDate()));
@@ -62,16 +62,12 @@ public class PrisonerUpdate extends JFrame{
         lbl_img.setIcon(imageIcon);
 
 
-
-        //System.out.println(prisonerWiew.prisonerDatas[8].getClass());
-        if (Integer.toString(prisonerWiew.prisoner.getGender()).equals("1")){
-
+        if (prisonerWiew.prisoner.getGender() == 1){
             prisonerGender.setText("Male");
         }else {
             prisonerGender.setText("Female");}
 
         prisonerPunishmenttime.setText(Integer.toString(prisonerWiew.prisoner.getPunishmenTime()));
-        //prisoner_photo.setText(prisonerWiew.prisonerDatas[10].toString());
 
         updateButton.addActionListener(new ActionListener() {
             @Override
@@ -93,22 +89,13 @@ public class PrisonerUpdate extends JFrame{
                 int punishmenttime= Integer.parseInt(prisonerPunishmenttime.getText());
                 byte[] photo = prisonerWiew.prisoner.photo;
 
+                int gender1;
+                if (gender.equals("Male")){
+                    gender1=1;
+                }else {
+                    gender1=0;
+                }
 
-
-             /*   System.out.println(ID);
-                System.out.println(name);
-                System.out.println(lastname);
-                System.out.println(height);
-                System.out.println(weight);
-                System.out.println(releaseDate);
-                System.out.println(TC);
-                System.out.println(age);
-                System.out.println(punishmenttime);
-              */
-
-                stuff.updatePrisoner(ID,name,lastname,height,weight,releaseDate,TC,age,gender,punishmenttime,photo);
-
-                messageLabel.setText("Update was successfull!");
                 JFileChooser chooser=new JFileChooser();
                 chooser.showOpenDialog(null);
                 File f=chooser.getSelectedFile();
@@ -132,6 +119,8 @@ public class PrisonerUpdate extends JFrame{
         catch (Exception e1){
 JOptionPane.showMessageDialog(null,e1);
         }
+                stuff.updatePrisoner(ID,name,lastname,height,weight,releaseDate,TC,age,gender1,punishmenttime,prisoner_photo);
+                messageLabel.setText("Update was successfull!");
             }
         });
         returnButton.addActionListener(new ActionListener() {

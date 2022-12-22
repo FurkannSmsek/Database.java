@@ -1,5 +1,11 @@
 import javax.swing.*;
 import java.sql.*;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
@@ -169,32 +175,31 @@ public class prisonStuff<photo> {
 
     }
 
-    public void updatePrisoner(int id , String name, String lastname, int height, int weight, String releaseDate, String TC, int age, String gender, int punishmentTime, byte[] photo) {
-        String sorgu =  "Update prisoner set prisoner_name = ? , prisoner_surname = ? , prisoner_height = ? , prisoner_weight = ?, prisoner_release_date = ? , prisoner_TC = ? , prisoner_age = ? , prisoner_gender = ? , prisoner_punishment_time = ?,prisoner_photo = ? where idprisoner = ?";
+    public void updatePrisoner(int id , String name, String lastname, int height, int weight, String releaseDate, String TC, int age, int gender, int punishmentTime, byte[] photo) {
+        String sorgu =  "Update prison.prisoner set prisoner_name = ? , prisoner_surname = ? , prisoner_height = ? , prisoner_weight = ? , prisoner_release_date = ?, prisoner_TC = ? , prisoner_age = ? , prisoner_gender = ? , prisoner_punishment_time = ? ,prisoner_photo = ? where idprisoner = ?;";
 
         try {
             preparedStatement = con.prepareStatement(sorgu);
 
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            LocalDateTime now = LocalDateTime.now();
 
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, lastname);
             preparedStatement.setInt(3, height);
             preparedStatement.setInt(4, weight);
-            preparedStatement.setString(5, releaseDate);
+            preparedStatement.setDate(5, java.sql.Date.valueOf(dtf.format(now)));
             preparedStatement.setString(6, TC);
             preparedStatement.setInt(7, age);
 
-            boolean gender1=true;
-            if (gender.equals("Male")){
-                gender1=true;
-            }else {
-                gender1=false;
-            }
-            preparedStatement.setBoolean(8,gender1 );
+
+            preparedStatement.setInt(8,gender );
             preparedStatement.setInt(9, punishmentTime);
-            preparedStatement.setInt(10,id);
-            preparedStatement.setBytes(11, photo);
+            preparedStatement.setBytes(10, photo);
+            preparedStatement.setInt(11,id);
+            System.out.println("_executeUpdate");
             preparedStatement.executeUpdate();
+            System.out.println("executeUpdate");
 
 
 

@@ -84,8 +84,6 @@ public class prisonerWiew extends  JFrame {
                 model = (DefaultTableModel) PrisonerTable.getModel();
                 int selected=PrisonerTable.getSelectedRow();
 
-                System.out.println(selected);
-
                 if (selected == -1) {
 
                     if (model.getRowCount() == 0) {
@@ -100,38 +98,28 @@ public class prisonerWiew extends  JFrame {
 
                     int ID= (int) model.getValueAt(selected, 0);
 
-                    System.out.println(ID);
-
                     String name= (String) model.getValueAt(selected, 1);
-                    System.out.println(name);
 
                     String lastname= (String) model.getValueAt(selected, 2);
-                    System.out.println(lastname);
 
                     int height= (int) model.getValueAt(selected, 3);
-                    System.out.println(height);
 
                     int weight= (int) model.getValueAt(selected, 4);
-                    System.out.println(weight);
 
                     Date releaseDate= (Date) model.getValueAt(selected, 5);
-                    System.out.println(releaseDate);
 
                     String TC= (String) model.getValueAt(selected, 6);
-                    System.out.println(TC);
 
                     int age= (int) model.getValueAt(selected, 7);
-                    System.out.println(age);
 
-                    int gender=1;
-                    if ( model.getValueAt(selected, 8).equals("Male")){
+                    int gender;
+                    if ( model.getValueAt(selected, 8).toString().equals("1")){
                         gender=1;
 
                     }else {
                         gender=0;
                     }
                     int punishmenttime= (int) model.getValueAt(selected, 9);
-                    System.out.println(punishmenttime);
                     //int photo= (byte) model.getValueAt(selected, 10);
 
                     byte[] photo = (byte[]) model.getValueAt(selected,10);
