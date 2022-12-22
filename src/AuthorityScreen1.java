@@ -77,24 +77,25 @@ public class AuthorityScreen1 extends JFrame{
         }
     }
 
-    private void CreateAuthorTable(){
+    private void CreateAuthorTable() {
 
         DefaultTableModel model = (DefaultTableModel) table1.getModel();
         String[] columnNames = {
                 "                                               PRISON'S DEPARTMANTS"
         };
+        String[] Prisoner = {
+"AD SOYAD"
+
+        };
 
         model.setColumnIdentifiers(columnNames);
+        model.setColumnIdentifiers(Prisoner);
+        for (int i=0;i<Prisoner.length;i++){
+            model.addRow(new String[]{Prisoner[i]});
+        }
 
-        prisonerList.forEach((prisoner -> {
-            model.setColumnIdentifiers(new String[]{"Ad Soyad"});
-            model.addRow(new String[]{prisoner.getPrisonerName() + prisoner.getPrisonerLastName()});
-        }));
 
-
+        }
 
 
     }
-
-
-}

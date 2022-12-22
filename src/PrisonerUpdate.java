@@ -1,6 +1,17 @@
+import javax.sql.rowset.serial.SerialBlob;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.sql.Blob;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.ImageIcon;
 
 public class PrisonerUpdate extends JFrame{
 
@@ -21,6 +32,10 @@ public class PrisonerUpdate extends JFrame{
     private JButton updateButton;
     private JButton returnButton;
     private JTextField prisonerLastname;
+    private JPanel photo;
+    private JLabel lbl_img;
+    String filename=null;
+    byte [] prisoner_photo=null;
 
 
 
@@ -34,23 +49,29 @@ public class PrisonerUpdate extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 
-        prisonerID.setText( prisonerWiew.prisonerDatas[0].toString());
-        prisonerName.setText((String)prisonerWiew.prisonerDatas[1]);
-        prisonerLastname.setText((String) prisonerWiew.prisonerDatas[2]);
-        prisonerHeight.setText(prisonerWiew.prisonerDatas[3].toString());
-        prisonerWeight.setText( prisonerWiew.prisonerDatas[4].toString());
-        prisonerReleaseDate.setText((String)prisonerWiew.prisonerDatas[5]);
-        prisonerTC.setText((String) prisonerWiew.prisonerDatas[6]);
-        prisonerAge.setText(prisonerWiew.prisonerDatas[7].toString());
+        prisonerID.setText(Integer.toString(prisonerWiew.prisoner.getPrisonerID()));
+        prisonerName.setText(prisonerWiew.prisoner.getPrisonerName());
+        prisonerLastname.setText((String) prisonerWiew.prisoner.getPrisonerLastName());
+        prisonerHeight.setText(Integer.toString(prisonerWiew.prisoner.getHeight()));
+        prisonerWeight.setText( Integer.toString(prisonerWiew.prisoner.getWeight()));
+        prisonerReleaseDate.setText(new SimpleDateFormat().format(prisonerWiew.prisoner.getReleaseDate()));
+        prisonerTC.setText( prisonerWiew.prisoner.getTC());
+        prisonerAge.setText(Integer.toString(prisonerWiew.prisoner.getAge()));
+        byte[] byte_photo = prisonerWiew.prisoner.photo;
+        ImageIcon imageIcon=new ImageIcon(new ImageIcon(byte_photo).getImage().getScaledInstance(300,240, Image.SCALE_SMOOTH));
+        lbl_img.setIcon(imageIcon);
 
-        System.out.println(prisonerWiew.prisonerDatas[8].getClass());
-        if (prisonerWiew.prisonerDatas[8].equals("1")){
+
+
+        //System.out.println(prisonerWiew.prisonerDatas[8].getClass());
+        if (Integer.toString(prisonerWiew.prisoner.getGender()).equals("1")){
 
             prisonerGender.setText("Male");
         }else {
             prisonerGender.setText("Female");}
 
-        prisonerPunishmenttime.setText(prisonerWiew.prisonerDatas[9].toString());
+        prisonerPunishmenttime.setText(Integer.toString(prisonerWiew.prisoner.getPunishmenTime()));
+        //prisoner_photo.setText(prisonerWiew.prisonerDatas[10].toString());
 
         updateButton.addActionListener(new ActionListener() {
             @Override
@@ -70,6 +91,9 @@ public class PrisonerUpdate extends JFrame{
                 int age= Integer.parseInt(prisonerAge.getText());
                 String gender= (prisonerGender.getText());
                 int punishmenttime= Integer.parseInt(prisonerPunishmenttime.getText());
+                byte[] photo = prisonerWiew.prisoner.photo;
+
+
 
              /*   System.out.println(ID);
                 System.out.println(name);
@@ -81,12 +105,33 @@ public class PrisonerUpdate extends JFrame{
                 System.out.println(age);
                 System.out.println(punishmenttime);
               */
-                stuff.updatePrisoner(ID,name,lastname,height,weight,releaseDate,TC,age,gender,punishmenttime);
 
+                stuff.updatePrisoner(ID,name,lastname,height,weight,releaseDate,TC,age,gender,punishmenttime,photo);
 
                 messageLabel.setText("Update was successfull!");
+                JFileChooser chooser=new JFileChooser();
+                chooser.showOpenDialog(null);
+                File f=chooser.getSelectedFile();
+                filename=f.getAbsolutePath();
 
 
+                ImageIcon imageIcon=new ImageIcon(new ImageIcon(filename).getImage().getScaledInstance(300,240, Image.SCALE_SMOOTH));
+                lbl_img.setIcon(imageIcon);
+
+
+            try{
+                File image=new File(filename);
+                FileInputStream fis=new FileInputStream(image);
+                ByteArrayOutputStream bos =new ByteArrayOutputStream();
+                byte[] buf=new byte [1024];
+                for (int readNum;(readNum=fis.read(buf))!=-1;){
+                    bos.write(buf,0,readNum);
+                }
+                prisoner_photo= bos.toByteArray();
+        }
+        catch (Exception e1){
+JOptionPane.showMessageDialog(null,e1);
+        }
             }
         });
         returnButton.addActionListener(new ActionListener() {
@@ -98,5 +143,6 @@ public class PrisonerUpdate extends JFrame{
                 prisonerWiew.setVisible(true);
             }
         });
+
     }
 }

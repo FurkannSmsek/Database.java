@@ -3,6 +3,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import java.awt.event.*;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class prisonerWiew extends  JFrame {
 
@@ -23,7 +24,8 @@ public class prisonerWiew extends  JFrame {
     prisonStuff stuff=new prisonStuff();
 
 
-    public static Object[] prisonerDatas= new Object[10];
+    public static Object[] prisonerDatas= new Object[11];
+    public static Prisoner prisoner;
     static boolean tableClicked=false;
     public prisonerWiew() {
 
@@ -82,6 +84,8 @@ public class prisonerWiew extends  JFrame {
                 model = (DefaultTableModel) PrisonerTable.getModel();
                 int selected=PrisonerTable.getSelectedRow();
 
+                System.out.println(selected);
+
                 if (selected == -1) {
 
                     if (model.getRowCount() == 0) {
@@ -96,19 +100,28 @@ public class prisonerWiew extends  JFrame {
 
                     int ID= (int) model.getValueAt(selected, 0);
 
+                    System.out.println(ID);
+
                     String name= (String) model.getValueAt(selected, 1);
+                    System.out.println(name);
 
                     String lastname= (String) model.getValueAt(selected, 2);
+                    System.out.println(lastname);
 
                     int height= (int) model.getValueAt(selected, 3);
+                    System.out.println(height);
 
                     int weight= (int) model.getValueAt(selected, 4);
+                    System.out.println(weight);
 
-                    String releaseDate= (String) model.getValueAt(selected, 5);
+                    Date releaseDate= (Date) model.getValueAt(selected, 5);
+                    System.out.println(releaseDate);
 
                     String TC= (String) model.getValueAt(selected, 6);
+                    System.out.println(TC);
 
                     int age= (int) model.getValueAt(selected, 7);
+                    System.out.println(age);
 
                     int gender=1;
                     if ( model.getValueAt(selected, 8).equals("Male")){
@@ -117,10 +130,16 @@ public class prisonerWiew extends  JFrame {
                     }else {
                         gender=0;
                     }
-
-                    System.out.println(gender);
                     int punishmenttime= (int) model.getValueAt(selected, 9);
+                    System.out.println(punishmenttime);
+                    //int photo= (byte) model.getValueAt(selected, 10);
 
+                    byte[] photo = (byte[]) model.getValueAt(selected,10);
+
+
+
+
+                    prisoner = new Prisoner(ID,name,lastname,height,weight,releaseDate,TC,age,gender,punishmenttime,photo);
 
 
 /*
@@ -145,6 +164,7 @@ public class prisonerWiew extends  JFrame {
                     prisonerDatas[7] =age;
                     prisonerDatas[8] =gender;
                     prisonerDatas[9] =punishmenttime;
+                    //prisonerDatas[10]=photo;
 
 
                 }
@@ -224,7 +244,8 @@ public class prisonerWiew extends  JFrame {
                 "TC",           //String
                 "Age",          //int
                 "Gender",        //String
-                "Punishment Time"//String
+                "Punishment Time",//String
+                "Photo"//Byte
 
         };
         model.setColumnIdentifiers(columnNames);
@@ -248,8 +269,8 @@ public class prisonerWiew extends  JFrame {
             System.out.println("Bağlantı Başarılı!");
             for (Prisoner prisoner: prisoners){
                 Object[]add={prisoner.getPrisonerID(),prisoner.getPrisonerName(),prisoner.getPrisonerLastName(),
-                prisoner.getHeight(),prisoner.getWeight(),prisoner.getReleaseDate(),prisoner.getTC(),prisoner.getAge(),prisoner.getGender(),prisoner.getPunishmenTime()};
-
+                prisoner.getHeight(),prisoner.getWeight(),prisoner.getReleaseDate(),prisoner.getTC(),prisoner.getAge(),prisoner.getGender(),prisoner.getPunishmenTime(),prisoner.getPhoto()};
+                //System.out.println(prisoner.getPhoto());
 
                 model.addRow(add);
 

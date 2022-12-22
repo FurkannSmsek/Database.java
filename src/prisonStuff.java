@@ -5,11 +5,11 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class prisonStuff {
+public class prisonStuff<photo> {
     private Connection con=null;
     private Statement statement = null;
     private PreparedStatement preparedStatement= null;
-
+    private byte photo;
 
 
     public prisonStuff(){
@@ -169,8 +169,8 @@ public class prisonStuff {
 
     }
 
-    public void updatePrisoner(int id ,String name,String lastname,int height,int weight,String releaseDate,String TC,int age,String gender,int punishmentTime) {
-        String sorgu =  "Update prisoner set prisoner_name = ? , prisoner_surname = ? , prisoner_height = ? , prisoner_weight = ?, prisoner_release_date = ? , prisoner_TC = ? , prisoner_age = ? , prisoner_gender = ? , prisoner_punishment_time = ? where idprisoner = ?";
+    public void updatePrisoner(int id , String name, String lastname, int height, int weight, String releaseDate, String TC, int age, String gender, int punishmentTime, byte[] photo) {
+        String sorgu =  "Update prisoner set prisoner_name = ? , prisoner_surname = ? , prisoner_height = ? , prisoner_weight = ?, prisoner_release_date = ? , prisoner_TC = ? , prisoner_age = ? , prisoner_gender = ? , prisoner_punishment_time = ?,prisoner_photo = ? where idprisoner = ?";
 
         try {
             preparedStatement = con.prepareStatement(sorgu);
@@ -193,7 +193,7 @@ public class prisonStuff {
             preparedStatement.setBoolean(8,gender1 );
             preparedStatement.setInt(9, punishmentTime);
             preparedStatement.setInt(10,id);
-
+            preparedStatement.setBytes(11, photo);
             preparedStatement.executeUpdate();
 
 
@@ -237,7 +237,9 @@ public class prisonStuff {
 
                 int punishmentTime=rs.getInt("prisoner_punishment_time");
 
-                data.add(new Prisoner(id,name,surname,height,weight,releaseDate,TC,age,gender,punishmentTime));
+                byte[] photo = rs.getBytes("prisoner_photo");
+
+                data.add(new Prisoner(id,name,surname,height,weight,releaseDate,TC,age,gender,punishmentTime, photo));
 
 
             }
@@ -556,4 +558,6 @@ public class prisonStuff {
     }
 
 
+    public void updatePrisoner(int id, String name, String lastname, int height, int weight, String releaseDate, String tc, int age, String gender, int punishmenttime, JPanel photo) {
+    }
 }

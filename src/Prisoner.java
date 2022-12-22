@@ -1,7 +1,8 @@
 import java.util.Date;
 
 public class Prisoner {
-   private int prisonerID,weight,height,age,gender,punishmenTime;
+    public byte[] photo;
+    private int prisonerID,weight,height,age,gender,punishmenTime;
    private String prisonerName,prisonerLastName,TC;
 
    private Date releaseDate;
@@ -17,6 +18,20 @@ public class Prisoner {
         this.gender = gender;
         this.TC = TC;
         this.releaseDate = releaseDate;
+    }
+
+    public Prisoner(int prisonerID, String prisonerName, String prisonerLastName, int height, int weight, Date releaseDate, String TC, int age, int gender , int punishmenTime, byte[] photo ) {
+        this.prisonerID = prisonerID;
+        this.weight = weight;
+        this.height = height;
+        this.age = age;
+        this.punishmenTime = punishmenTime;
+        this.prisonerName = prisonerName;
+        this.prisonerLastName = prisonerLastName;
+        this.gender = gender;
+        this.TC = TC;
+        this.releaseDate = releaseDate;
+        this.photo = photo;
     }
 
     public int getPrisonerID() {
@@ -97,6 +112,14 @@ public class Prisoner {
 
     public void setReleaseDate(Date releaseDate) {
         this.releaseDate = releaseDate;
+    }
+
+    public byte[] getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(Byte photo) {
+        this.photo = new byte[1024];
     }
 }
 
